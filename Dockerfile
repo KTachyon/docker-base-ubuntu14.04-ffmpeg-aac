@@ -56,6 +56,3 @@ RUN cd ~/ffmpeg_sources && \
 
 RUN rm -rf ~/ffmpeg_sources
 ### END OF FFMPEG ###
-
-CMD ["--help"]
-ENTRYPOINT ["ffmpeg"]
