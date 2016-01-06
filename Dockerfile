@@ -54,5 +54,11 @@ RUN cd ~/ffmpeg_sources && \
   make distclean && \
   hash -r
 
+# Make sure $PATH will be up to date
+RUN echo '' >> ~/.bashrc
+RUN echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
+RUN source ~/.bashrc
+
+# Cleanup
 RUN rm -rf ~/ffmpeg_sources
 ### END OF FFMPEG ###
