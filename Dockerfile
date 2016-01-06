@@ -22,8 +22,8 @@ RUN cd ~/ffmpeg_sources && \
   wget http://webm.googlecode.com/files/libvpx-v1.3.0.tar.bz2 && \
   tar xjvf libvpx-v1.3.0.tar.bz2 && \
   cd libvpx-v1.3.0 && \
-  PATH="$HOME/bin:$PATH" ./configure --prefix="$HOME/ffmpeg_build" --disable-examples && \
-  PATH="$HOME/bin:$PATH" make && \
+  ./configure --prefix="$HOME/ffmpeg_build" --disable-examples && \
+  make && \
   make install && \
   make clean
 
@@ -32,11 +32,11 @@ RUN cd ~/ffmpeg_sources && \
   wget http://ffmpeg.org/releases/ffmpeg-snapshot.tar.bz2 && \
   tar xjvf ffmpeg-snapshot.tar.bz2 && \
   cd ffmpeg && \
-  PATH="$HOME/bin:$PATH" PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure \
+  PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure \
   --prefix="$HOME/ffmpeg_build" \
   --extra-cflags="-I$HOME/ffmpeg_build/include" \
   --extra-ldflags="-L$HOME/ffmpeg_build/lib" \
-  --bindir="$HOME/bin" \
+  --bindir="/usr/bin" \
   --enable-gpl \
   --enable-libass \
   --enable-libfdk-aac \
@@ -49,14 +49,10 @@ RUN cd ~/ffmpeg_sources && \
   --enable-libx264 \
   --enable-nonfree \
   --enable-x11grab && \
-  PATH="$HOME/bin:$PATH" make && \
+  make && \
   make install && \
   make distclean && \
   hash -r
-
-# Make sure $PATH will be up to date
-RUN echo '' >> ~/.bashrc
-RUN echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
 
 # Cleanup
 RUN rm -rf ~/ffmpeg_sources
